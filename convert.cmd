@@ -1,0 +1,1 @@
+pyuic6 -o mbta_gui.py mbta_gui.ui
