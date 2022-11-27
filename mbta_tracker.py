@@ -71,8 +71,8 @@ class MBTATracker(QObject):
         
         self.stopped_alerts = [
                 self.chiswick_stopped_sig,
-                self.chiswick_stopped_sig,
-                self.chiswick_delayed_sig
+                self.cleveland_stopped_sig,
+                self.reservoir_stopped_sig
         ]
         
         self.delayed_alerts = [
@@ -84,14 +84,19 @@ class MBTATracker(QObject):
     @pyqtSlot()
     def run(self):
         while True:
+            # Loops through each of the 3 T stops
             for station in range(3):
                 with request.urlopen(self.green_lines[station]) as url:
                     mbta_info = json.load(url)
+                    previous_time = 99
+                    previous_status = None
+                    # Writes to the top then bottom minute time status display
                     for col in range(2):
                         status = mbta_info['data'][col]['attributes']['status']
                         arrival_time = mbta_info['data'][col]['attributes']['arrival_time']
+                        
+                        # If the train isn't stopped, show arrival time
                         if not status:
-                            self.stopped_alerts[station].emit('color: #303030;')
                             dt = datetime.now(timezone.utc) - timedelta(hours=5, minutes=0)
                             formatted_time = datetime.fromisoformat(
                                     arrival_time.replace('T', ' ')[:-6]
@@ -99,19 +104,33 @@ class MBTATracker(QObject):
                             )
                             formatted_time -= dt
                             display_time = floor(formatted_time.total_seconds() / 60)
+                            
+                            # If not stopped, displays either the minutes to wait or "Arriving" if 0
                             if display_time > 0:
                                 self.arrival_times[station * 2 + col].emit(
                                         ' '
                                         + str(display_time)
                                         + ' minutes'
                                 )
-                                self.delayed_alerts[station].emit('color: #303030;')
-                                if col == 0 and display_time > 12:
-                                    self.delayed_alerts[station].emit('color: #FF4444;')
                             else:
                                 self.arrival_times[station * 2 + col].emit(' Arriving')
-                        else:
+                                
+                            # Handles delay logic
+                            if previous_time > 12:
+                                self.delayed_alerts[station].emit('color: #FF4444;')
+                            elif display_time - previous_time > 12:
+                                self.delayed_alerts[station].emit('color: #FF4444;')
+                            else:
+                                self.delayed_alerts[station].emit('color: #303030;')
+                                
+                        # Handles stoppped train logic
+                        if status or previous_status:
                             self.stopped_alerts[station].emit('color: #FF4444;')
+                        else:
+                            self.stopped_alerts[station].emit('color: #303030;')
+                    
+                        previous_time = display_time
+                        previous_status = status
             
             lcd_value = 60
             while lcd_value > 0:
