@@ -1,0 +1,1 @@
+pyinstaller -F mbta_tracker.pyw
