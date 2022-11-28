@@ -36,7 +36,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Unispace</family>
+     <family>Miriam Mono CLM</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -58,7 +58,57 @@
   <widget class="QLabel" name="chiswick_label">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>90</x>
+     <y>100</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Source Serif Pro Black</family>
+     <pointsize>24</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #FAF9F6;</string>
+   </property>
+   <property name="text">
+    <string>Fenway</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="cleveland_label">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>100</y>
+     <width>211</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Source Serif Pro Black</family>
+     <pointsize>24</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #FAF9F6;</string>
+   </property>
+   <property name="text">
+    <string>St. Mary's St.</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="reservoir_label">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
      <y>100</y>
      <width>221</width>
      <height>41</height>
@@ -77,57 +127,7 @@
     <string notr="true">color: #FAF9F6;</string>
    </property>
    <property name="text">
-    <string>Chiswick Road</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cleveland_label">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>100</y>
-     <width>251</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #FAF9F6;</string>
-   </property>
-   <property name="text">
-    <string>Cleveland Circle</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="reservoir_label">
-   <property name="geometry">
-    <rect>
-     <x>720</x>
-     <y>100</y>
-     <width>161</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #FAF9F6;</string>
-   </property>
-   <property name="text">
-    <string>Reservoir</string>
+    <string>Route 65 Bus</string>
    </property>
   </widget>
   <widget class="QLCDNumber" name="refresh_lcd">
@@ -208,7 +208,7 @@
     <string notr="true">color: #FAF9F6;</string>
    </property>
    <property name="text">
-    <string>Strathmore T Stops</string>
+    <string>WHOOP MBTA Stops</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="cleveland_1">
@@ -222,7 +222,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Unispace</family>
+     <family>Miriam Mono CLM</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -252,7 +252,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Unispace</family>
+     <family>Miriam Mono CLM</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -282,7 +282,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Unispace</family>
+     <family>Miriam Mono CLM</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -312,7 +312,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Unispace</family>
+     <family>Miriam Mono CLM</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -342,7 +342,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Unispace</family>
+     <family>Miriam Mono CLM</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>

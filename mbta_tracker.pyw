@@ -1,29 +1,35 @@
-from datetime import datetime, timedelta, timezone
 import json
+import os
 import time
-from urllib import request
+from datetime import datetime, timedelta, timezone
 from math import floor
-from mbta_gui import Ui_main_window
+from urllib import request
+
+from PyQt6.QtCore import QObject, QThread, pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from PyQt6.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
+
+from mbta_gui import Ui_main_window
+
+# Resizes to fit on a variety of screens
+os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
 
 class MBTATracker(QObject):
     """Tracker object which parses the MBTA data and
     sends signals to the GUI to update every minute
     """
     # Creating signals
-    chiswick_1_sig = pyqtSignal(str)
-    chiswick_2_sig = pyqtSignal(str)
-    chiswick_stopped_sig = pyqtSignal(str)
-    chiswick_delayed_sig = pyqtSignal(str)
-    cleveland_1_sig = pyqtSignal(str)
-    cleveland_2_sig = pyqtSignal(str)
-    cleveland_stopped_sig = pyqtSignal(str)
-    cleveland_delayed_sig = pyqtSignal(str)
-    reservoir_1_sig = pyqtSignal(str)
-    reservoir_2_sig = pyqtSignal(str)
-    reservoir_stopped_sig = pyqtSignal(str)
-    reservoir_delayed_sig = pyqtSignal(str)
+    fenway_1_sig = pyqtSignal(str)
+    fenway_2_sig = pyqtSignal(str)
+    fenway_stopped_sig = pyqtSignal(str)
+    fenway_delayed_sig = pyqtSignal(str)
+    stmary_1_sig = pyqtSignal(str)
+    stmary_2_sig = pyqtSignal(str)
+    stmary_stopped_sig = pyqtSignal(str)
+    stmary_delayed_sig = pyqtSignal(str)
+    rte_65_1_sig = pyqtSignal(str)
+    rte_65_2_sig = pyqtSignal(str)
+    rte_65_stopped_sig = pyqtSignal(str)
+    rte_65_delayed_sig = pyqtSignal(str)
     refresh_lcd_sig = pyqtSignal(int)
     
     def __init__(self):
@@ -31,54 +37,54 @@ class MBTATracker(QObject):
         lists which are used in the tracker logic
         """
         super().__init__()
-        self.chiswick_1_sig.connect(gui.chiswick_1.setText)
-        self.chiswick_2_sig.connect(gui.chiswick_2.setText)
-        self.cleveland_1_sig.connect(gui.cleveland_1.setText)
-        self.cleveland_2_sig.connect(gui.cleveland_2.setText)
-        self.reservoir_1_sig.connect(gui.reservoir_1.setText)
-        self.reservoir_2_sig.connect(gui.reservoir_2.setText)
-        self.chiswick_stopped_sig.connect(gui.chiswick_stopped.setStyleSheet)
-        self.chiswick_stopped_sig.connect(gui.cleveland_stopped.setStyleSheet)
-        self.chiswick_delayed_sig.connect(gui.reservoir_stopped.setStyleSheet)
-        self.chiswick_delayed_sig.connect(gui.chiswick_delayed.setStyleSheet)
-        self.cleveland_delayed_sig.connect(gui.cleveland_delayed.setStyleSheet)
-        self.reservoir_delayed_sig.connect(gui.reservoir_delayed.setStyleSheet)
+        self.fenway_1_sig.connect(gui.chiswick_1.setText)
+        self.fenway_2_sig.connect(gui.chiswick_2.setText)
+        self.stmary_1_sig.connect(gui.cleveland_1.setText)
+        self.stmary_2_sig.connect(gui.cleveland_2.setText)
+        self.rte_65_1_sig.connect(gui.reservoir_1.setText)
+        self.rte_65_2_sig.connect(gui.reservoir_2.setText)
+        self.fenway_stopped_sig.connect(gui.chiswick_stopped.setStyleSheet)
+        self.fenway_stopped_sig.connect(gui.cleveland_stopped.setStyleSheet)
+        self.fenway_delayed_sig.connect(gui.reservoir_stopped.setStyleSheet)
+        self.fenway_delayed_sig.connect(gui.chiswick_delayed.setStyleSheet)
+        self.stmary_delayed_sig.connect(gui.cleveland_delayed.setStyleSheet)
+        self.rte_65_delayed_sig.connect(gui.reservoir_delayed.setStyleSheet)
         self.refresh_lcd_sig.connect(gui.refresh_lcd.display)
         
         self.green_lines = [
                 (
                 'https://api-v3.mbta.com/predictions?filter'
-                '[stop]=place-chswk&route=Green-B&direction_id=1&sort=arrival_time'
-                ),
-                (
-                'https://api-v3.mbta.com/schedules?filter'
-                '[stop]=place-clmnl&route=Green-C&direction_id=1&sort=departure_time'
+                '[stop]=place-fenwy&route=Green-D&direction_id=0&sort=arrival_time'
                 ),
                 (
                 'https://api-v3.mbta.com/predictions?filter'
-                '[stop]=place-rsmnl&route=Green-D&direction_id=1&sort=arrival_time'
+                '[stop]=place-smary&route=Green-C&direction_id=0&sort=departure_time'
+                ),
+                (
+                'https://api-v3.mbta.com/predictions?filter'
+                '[stop]=1519&route=65&direction_id=0&sort=arrival_time'
                 )
         ]
         
         self.arrival_times = [
-                self.chiswick_1_sig,
-                self.chiswick_2_sig,
-                self.cleveland_1_sig,
-                self.cleveland_2_sig,
-                self.reservoir_1_sig,
-                self.reservoir_2_sig
+                self.fenway_1_sig,
+                self.fenway_2_sig,
+                self.stmary_1_sig,
+                self.stmary_2_sig,
+                self.rte_65_1_sig,
+                self.rte_65_2_sig
         ]
         
         self.stopped_alerts = [
-                self.chiswick_stopped_sig,
-                self.cleveland_stopped_sig,
-                self.reservoir_stopped_sig
+                self.fenway_stopped_sig,
+                self.stmary_stopped_sig,
+                self.rte_65_stopped_sig
         ]
         
         self.delayed_alerts = [
-                self.chiswick_delayed_sig,
-                self.cleveland_delayed_sig,
-                self.reservoir_delayed_sig
+                self.fenway_delayed_sig,
+                self.stmary_delayed_sig,
+                self.rte_65_delayed_sig
         ]
 
     @pyqtSlot()
@@ -150,7 +156,7 @@ class MBTATracker(QObject):
                         continue
                 
                 # Rate limit = 20 times/sec, so lcd_value must not be below 3
-                lcd_value = 30
+                lcd_value = 10
                 while lcd_value > 0:
                     self.refresh_lcd_sig.emit(lcd_value)
                     lcd_value -= 1
