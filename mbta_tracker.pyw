@@ -12,6 +12,12 @@ from mbta_gui import Ui_main_window
 
 # Resizes to fit on a variety of screens
 os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
+try:
+    with open('key.env', 'r') as f:
+        API_KEY = f.readlines()[0]
+        print(API_KEY)
+except FileNotFoundError:
+    API_KEY = ''
 
 class MBTATracker(QObject):
     """Tracker object which parses the MBTA data and
@@ -55,14 +61,17 @@ class MBTATracker(QObject):
                 (
                 'https://api-v3.mbta.com/predictions?filter'
                 '[stop]=place-fenwy&route=Green-D&direction_id=0&sort=arrival_time'
+                '&api_key=' + API_KEY
                 ),
                 (
                 'https://api-v3.mbta.com/predictions?filter'
                 '[stop]=place-smary&route=Green-C&direction_id=0&sort=departure_time'
+                '&api_key=' + API_KEY
                 ),
                 (
                 'https://api-v3.mbta.com/predictions?filter'
                 '[stop]=1519&route=65&direction_id=0&sort=arrival_time'
+                '&api_key=' + API_KEY
                 )
         ]
         
@@ -155,12 +164,13 @@ class MBTATracker(QObject):
                     except IndexError:
                         continue
                 
-                # Rate limit = 20 times/sec, so lcd_value must not be below 3
-                lcd_value = 10
-                while lcd_value > 0:
-                    self.refresh_lcd_sig.emit(lcd_value)
-                    lcd_value -= 1
-                    time.sleep(1)
+            # Rate limit = 20 times/min, so lcd_value must not be below 3
+            # Unless API KEY is set, then you can refresh 16 times/sec
+            lcd_value = 20
+            while lcd_value > 0:
+                self.refresh_lcd_sig.emit(lcd_value)
+                lcd_value -= 1
+                time.sleep(1)
 
 
 if __name__ == '__main__':
