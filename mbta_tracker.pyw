@@ -1,11 +1,23 @@
-from datetime import datetime, timedelta, timezone
 import json
+import os
 import time
-from urllib import request
+from datetime import datetime, timedelta, timezone
 from math import floor
-from mbta_gui import Ui_main_window
+from urllib import request
+
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
+
+from mbta_gui import Ui_main_window
+
+# Resizes to fit on a variety of screens
+os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
+try:
+    with open('key.env', 'r') as f:
+        API_KEY = f.readlines()[0]
+        print(API_KEY)
+except FileNotFoundError:
+    API_KEY = ''
 
 class MBTATracker(QObject):
     """Tracker object which parses the MBTA data and
@@ -149,12 +161,12 @@ class MBTATracker(QObject):
                     except IndexError:
                         continue
                 
-                # Rate limit = 20 times/sec, so lcd_value must not be below 3
-                lcd_value = 30
-                while lcd_value > 0:
-                    self.refresh_lcd_sig.emit(lcd_value)
-                    lcd_value -= 1
-                    time.sleep(1)
+            # Rate limit = 20 times/sec, so lcd_value must not be below 3
+            lcd_value = 30
+            while lcd_value > 0:
+                self.refresh_lcd_sig.emit(lcd_value)
+                lcd_value -= 1
+                time.sleep(1)
 
 
 if __name__ == '__main__':
