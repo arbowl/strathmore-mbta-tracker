@@ -24,83 +24,49 @@ class MBTATracker(QObject):
     sends signals to the GUI to update every minute
     """
     # Creating signals
-    fenway_1_sig = pyqtSignal(str)
-    fenway_2_sig = pyqtSignal(str)
-    fenway_stopped_sig = pyqtSignal(str)
-    fenway_delayed_sig = pyqtSignal(str)
-    stmary_1_sig = pyqtSignal(str)
-    stmary_2_sig = pyqtSignal(str)
-    stmary_stopped_sig = pyqtSignal(str)
-    stmary_delayed_sig = pyqtSignal(str)
-    rte_65_1_sig = pyqtSignal(str)
-    rte_65_2_sig = pyqtSignal(str)
-    rte_65_stopped_sig = pyqtSignal(str)
-    rte_65_delayed_sig = pyqtSignal(str)
+    chiswick_1_sig = pyqtSignal(str)
+    chiswick_2_sig = pyqtSignal(str)
+    chiswick_stopped_sig = pyqtSignal(str)
+    chiswick_delayed_sig = pyqtSignal(str)
     refresh_lcd_sig = pyqtSignal(int)
-    
+
     def __init__(self):
         """Connects the signals to GUI elements and creates the
         lists which are used in the tracker logic
         """
         super().__init__()
-        self.fenway_1_sig.connect(gui.chiswick_1.setText)
-        self.fenway_2_sig.connect(gui.chiswick_2.setText)
-        self.stmary_1_sig.connect(gui.cleveland_1.setText)
-        self.stmary_2_sig.connect(gui.cleveland_2.setText)
-        self.rte_65_1_sig.connect(gui.reservoir_1.setText)
-        self.rte_65_2_sig.connect(gui.reservoir_2.setText)
-        self.fenway_stopped_sig.connect(gui.chiswick_stopped.setStyleSheet)
-        self.fenway_stopped_sig.connect(gui.cleveland_stopped.setStyleSheet)
-        self.fenway_delayed_sig.connect(gui.reservoir_stopped.setStyleSheet)
-        self.fenway_delayed_sig.connect(gui.chiswick_delayed.setStyleSheet)
-        self.stmary_delayed_sig.connect(gui.cleveland_delayed.setStyleSheet)
-        self.rte_65_delayed_sig.connect(gui.reservoir_delayed.setStyleSheet)
+        self.chiswick_1_sig.connect(gui.chiswick_1.setText)
+        self.chiswick_2_sig.connect(gui.chiswick_2.setText)
+        self.chiswick_stopped_sig.connect(gui.chiswick_stopped.setStyleSheet)
+        self.chiswick_delayed_sig.connect(gui.chiswick_delayed.setStyleSheet)
         self.refresh_lcd_sig.connect(gui.refresh_lcd.display)
         
         self.green_lines = [
                 (
                 'https://api-v3.mbta.com/predictions?filter'
-                '[stop]=place-fenwy&route=Green-D&direction_id=0&sort=arrival_time'
-                '&api_key=' + API_KEY
-                ),
-                (
-                'https://api-v3.mbta.com/predictions?filter'
-                '[stop]=place-smary&route=Green-C&direction_id=0&sort=departure_time'
-                '&api_key=' + API_KEY
-                ),
-                (
-                'https://api-v3.mbta.com/predictions?filter'
-                '[stop]=1519&route=65&direction_id=0&sort=arrival_time'
+                '[stop]=place-WML-0025&route=CR-Worcester&direction_id=1&sort=arrival_time'
                 '&api_key=' + API_KEY
                 )
         ]
         
         self.arrival_times = [
-                self.fenway_1_sig,
-                self.fenway_2_sig,
-                self.stmary_1_sig,
-                self.stmary_2_sig,
-                self.rte_65_1_sig,
-                self.rte_65_2_sig
+                self.chiswick_1_sig,
+                self.chiswick_2_sig
         ]
         
         self.stopped_alerts = [
-                self.fenway_stopped_sig,
-                self.stmary_stopped_sig,
-                self.rte_65_stopped_sig
+                self.chiswick_stopped_sig
         ]
         
         self.delayed_alerts = [
-                self.fenway_delayed_sig,
-                self.stmary_delayed_sig,
-                self.rte_65_delayed_sig
+                self.chiswick_delayed_sig
         ]
 
     @pyqtSlot()
     def run(self):
         while True:
             # Loops through each of the 3 T stops
-            for station in range(3):
+            for station in range(1):
                 with request.urlopen(self.green_lines[station]) as url:
                     mbta_info = json.load(url)
                     k = 0
@@ -164,9 +130,8 @@ class MBTATracker(QObject):
                     except IndexError:
                         continue
                 
-            # Rate limit = 20 times/min, so lcd_value must not be below 3
-            # Unless API KEY is set, then you can refresh 16 times/sec
-            lcd_value = 20
+            # Rate limit = 20 times/sec, so lcd_value must not be below 3
+            lcd_value = 10
             while lcd_value > 0:
                 self.refresh_lcd_sig.emit(lcd_value)
                 lcd_value -= 1
@@ -178,6 +143,10 @@ if __name__ == '__main__':
     window = QMainWindow()
     gui = Ui_main_window()
     gui.setupUi(window)
+    if API_KEY == '':
+        gui.api_check.setChecked(False)
+    else:
+        gui.api_check.setChecked(True)
     # GUI updates come from a worker thread
     gui.thread = QThread()
     gui.worker = MBTATracker()

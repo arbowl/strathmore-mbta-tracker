@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>954</width>
-    <height>329</height>
+    <width>320</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Strathmore T Stops</string>
+   <string>WHOOP Commuter Rail</string>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -36,7 +36,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Miriam Mono CLM</family>
+     <family>Unispace</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -60,16 +60,16 @@
     <rect>
      <x>90</x>
      <y>100</y>
-     <width>191</width>
+     <width>311</width>
      <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Source Serif Pro Black</family>
-     <pointsize>24</pointsize>
+     <pointsize>20</pointsize>
      <weight>75</weight>
-     <italic>false</italic>
+     <italic>true</italic>
      <bold>true</bold>
     </font>
    </property>
@@ -77,64 +77,14 @@
     <string notr="true">color: #FAF9F6;</string>
    </property>
    <property name="text">
-    <string>Fenway</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cleveland_label">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>100</y>
-     <width>211</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #FAF9F6;</string>
-   </property>
-   <property name="text">
-    <string>St. Mary's St.</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="reservoir_label">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>100</y>
-     <width>221</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #FAF9F6;</string>
-   </property>
-   <property name="text">
-    <string>Route 65 Bus</string>
+    <string>Lansdowne</string>
    </property>
   </widget>
   <widget class="QLCDNumber" name="refresh_lcd">
    <property name="geometry">
     <rect>
-     <x>890</x>
-     <y>20</y>
+     <x>150</x>
+     <y>330</y>
      <width>51</width>
      <height>41</height>
     </rect>
@@ -164,9 +114,9 @@
   <widget class="QLabel" name="refresh_label">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>20</y>
-     <width>151</width>
+     <x>40</x>
+     <y>330</y>
+     <width>111</width>
      <height>41</height>
     </rect>
    </property>
@@ -191,16 +141,16 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>441</width>
+     <width>261</width>
      <height>61</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Source Serif Pro Black</family>
-     <pointsize>36</pointsize>
+     <pointsize>22</pointsize>
      <weight>75</weight>
-     <italic>true</italic>
+     <italic>false</italic>
      <bold>true</bold>
     </font>
    </property>
@@ -208,127 +158,7 @@
     <string notr="true">color: #FAF9F6;</string>
    </property>
    <property name="text">
-    <string>WHOOP MBTA Stops</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="cleveland_1">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>150</y>
-     <width>291</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Miriam Mono CLM</family>
-     <pointsize>28</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: black; color: #FFC600;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="reservoir_1">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>150</y>
-     <width>291</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Miriam Mono CLM</family>
-     <pointsize>28</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: black; color: #FFC600;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="reservoir_2">
-   <property name="geometry">
-    <rect>
-     <x>650</x>
-     <y>220</y>
-     <width>291</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Miriam Mono CLM</family>
-     <pointsize>28</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: black; color: #FFC600;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="cleveland_2">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>220</y>
-     <width>291</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Miriam Mono CLM</family>
-     <pointsize>28</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: black; color: #FFC600;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
+    <string>WHOOP CommRail</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="chiswick_2">
@@ -342,7 +172,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Miriam Mono CLM</family>
+     <family>Unispace</family>
      <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
@@ -367,7 +197,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>30</x>
      <y>280</y>
      <width>91</width>
      <height>41</height>
@@ -392,7 +222,7 @@
   <widget class="QLabel" name="chiswick_delayed">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>200</x>
      <y>280</y>
      <width>101</width>
      <height>41</height>
@@ -414,110 +244,45 @@
     <string>Delayed</string>
    </property>
   </widget>
-  <widget class="QLabel" name="cleveland_stopped">
+  <widget class="QLabel" name="refresh_label_2">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>330</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Source Serif Pro Black</family>
+     <pointsize>18</pointsize>
+     <weight>75</weight>
+     <italic>true</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #FAF9F6;</string>
+   </property>
+   <property name="text">
+    <string>API:</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="api_check">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>280</y>
+     <x>280</x>
+     <y>340</y>
      <width>91</width>
-     <height>41</height>
+     <height>23</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>18</pointsize>
-     <weight>75</weight>
-     <italic>true</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #303030;</string>
-   </property>
    <property name="text">
-    <string>Stopped</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cleveland_delayed">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>280</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>18</pointsize>
-     <weight>75</weight>
-     <italic>true</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #303030;</string>
-   </property>
-   <property name="text">
-    <string>Delayed</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="reservoir_stopped">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>280</y>
-     <width>91</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>18</pointsize>
-     <weight>75</weight>
-     <italic>true</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #303030;</string>
-   </property>
-   <property name="text">
-    <string>Stopped</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="reservoir_delayed">
-   <property name="geometry">
-    <rect>
-     <x>810</x>
-     <y>280</y>
-     <width>101</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Source Serif Pro Black</family>
-     <pointsize>18</pointsize>
-     <weight>75</weight>
-     <italic>true</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: #303030;</string>
-   </property>
-   <property name="text">
-    <string>Delayed</string>
+    <string/>
    </property>
   </widget>
  </widget>
